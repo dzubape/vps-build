@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  frontend:
+    container_name: load-nft-frontend
+    image: load-nft/frontend
+    build:
+      context: ./ml
+      dockerfile: ./frontend.Dockerfile
+    ports:
+      - 10080:80
+      - 10443:443
+  backend:
+    container_name: load-nft-backend
+    image: load-nft/backend
+    ports:
+      - 11080:80
+      - 11443:443
