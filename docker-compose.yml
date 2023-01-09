@@ -7,25 +7,20 @@ services:
     build:
       context: ./
       dockerfile: ./frontend.Dockerfile
-    secrets:
-      - git_rsa
-      - git_rsa.pub
+      args:
+        REMOTE_REPOSITORY: git@github.com:dzubape/vps-build-user.git
+        KEY_FILENAME: loadsite_rsa
     ports:
       - 10080:80
       - 10443:443
     restart: always
-  backend:
-    container_name: load-nft-backend
-    image: load-nft/backend
-    ports:
-      - 11080:80
-      - 11443:443
-    restart: always
-
-secrets:
-  git_rsa:
-    file: ~/.ssh/loadsite_rsa
-  git_rsa.pub:
-    file: ~/.ssh/loadsite_rsa.pub
-  readme:
-    file: ./README.md
+  # backend:
+  #   container_name: load-nft-backend
+  #   image: load-nft/backend
+  #   build:
+  #     context: ./
+  #     dockerfile: ./backend.Dockerfile
+  #   ports:
+  #     - 11080:80
+  #     - 11443:443
+  #   restart: always
