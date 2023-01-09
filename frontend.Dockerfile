@@ -1,12 +1,17 @@
+FROM alpine/git:2.36.3 as loadrep
+
+COPY ./ssh /root/.ssh
+
+ARG REMOTE_REPOSITORY
+ARG KEY_FILENAME
+
+RUN git -c core.sshCommand="ssh -i /root/.ssh/${KEY_FILENAME}" \
+    clone --depth=1 ${REMOTE_REPOSITORY} /app
+
 FROM node:16.19.0-bullseye-slim
 
-RUN apt update && apt install -y \
-    git \
-    curl \
-    && echo "All tools has been installed successfully"
+COPY --from=loadrep /app /app
 
-RUN curl -s https://api.ipify.org/?format=text
+WORKDIR /app
 
-# ARG ANTI_CACHE
-
-RUN git -c core.sshCommand="ssh -i /run/secrets/git_rsa" clone git@github.com:dzubape/vps-build-user.git && cd vps-build-user && test-user.sh
+ENTRYPOINT ["entrypoint.sh"]
