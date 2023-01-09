@@ -7,8 +7,8 @@ services:
     build:
       context: ./
       dockerfile: ./frontend.Dockerfile
-      args:
-        ANTI_CACHE: $(date +%s)
+      # args:
+      #   ANTI_CACHE: $(date +%s)
     secrets:
       - git_rsa
     ports:
