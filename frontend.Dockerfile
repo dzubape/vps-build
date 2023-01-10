@@ -14,4 +14,4 @@ COPY --from=loadrep /app /app
 
 WORKDIR /app
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
